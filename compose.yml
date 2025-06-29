@@ -1,0 +1,35 @@
+services:
+    app:
+        image: intertia
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        container_name: intertia-app
+        restart: unless-stopped
+        volumes:
+            - ./:/app
+        networks:
+            - intertia
+        environment:
+            - SERVER_NAME=intertia.local:80
+        ports:
+            - "80:80"
+    db:
+        image: 'mariadb:10'
+        container_name: intertia-db
+        restart: unless-stopped
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: intertia
+        volumes:
+            - mariadb-intertia:/var/lib/mysql
+        networks:
+            - intertia
+networks:
+    intertia:
+        driver: bridge
+
+volumes:
+    mariadb-intertia:
