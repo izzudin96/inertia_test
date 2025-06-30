@@ -1,5 +1,11 @@
 <template>
     <div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+        <div>
+            Todos:
+            <ul>
+                <li v-for="todo in todos">{{ todo.title }}</li>
+            </ul>
+        </div>
         <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
             <div class="p-8">
                 <form @submit.prevent="form.post('/todos')" class="space-y-4">
@@ -22,7 +28,13 @@
 import { ref, onMounted, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 
-const loadedTime = ref('')
+const loadedTime = ref('');
+
+defineProps({
+    todos: {
+        type: Array,
+    }
+});
 
 const form = useForm({
     title: ''
