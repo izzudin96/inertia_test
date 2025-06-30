@@ -8,7 +8,7 @@
         </div>
         <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
             <div class="p-8">
-                <form @submit.prevent="form.post('/todos')" class="space-y-4">
+                <form @submit.prevent="submit" class="space-y-4">
                     <div class="flex flex-col">
                         <label for="title">Title:</label>
                         <input type="text" name="title" v-model="form.title" id="title" class="border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -39,6 +39,17 @@ defineProps({
 const form = useForm({
     title: ''
 });
+
+const submit = () => {
+    form.post('/todos', {
+        onSuccess: () => {
+            form.reset();
+        },
+        onError: () => {
+            console.error('Error submitting form:', form.errors);
+        },
+    })
+}
 
 onMounted(() => {
     loadedTime.value = new Date().toLocaleString()
