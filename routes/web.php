@@ -12,6 +12,14 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/todos', function() {
+    $todos = Todo::all();
+
+    return Inertia::render('Todos/Index', [
+        'todos' => $todos
+    ]);
+});
+
 Route::post('/todos', function() {
     $todo = request()->validate([
         'title' => 'required',
@@ -19,5 +27,9 @@ Route::post('/todos', function() {
 
     Todo::create($todo);
 
-    return redirect('/');
+    return redirect('/todos');
+});
+
+Route::get('/todos/create', function() {
+    return Inertia::render('Todos/Create');
 });
