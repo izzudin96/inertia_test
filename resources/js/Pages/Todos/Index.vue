@@ -11,18 +11,27 @@
         </div>
 
         <ul class="list-disc">
-            <li v-for="todo in todos" :key="todo.id">{{ todo.title }}</li>
+            <li v-for="todo in todos" :key="todo.id">{{ todo.title }} | <button @click="deleteTodo(todo.id)">Delete</button></li>
         </ul>
     </div>
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
+
+const form = useForm();
 
 defineProps({
     todos: {
         type: Array,
     }
 });
+
+const deleteTodo = (id) => {
+    form.delete(`/todos/${id}`, {
+        onSuccess: () => alert('delete success'),
+        onError: () => alert('delete failed'),
+    });
+}
 
 </script>

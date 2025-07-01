@@ -33,3 +33,10 @@ Route::post('/todos', function() {
 Route::get('/todos/create', function() {
     return Inertia::render('Todos/Create');
 });
+
+Route::delete('/todos/{id}', function() {
+    $todo = Todo::findOrFail(request()->id);
+    $todo->delete();
+
+    return redirect()->back();
+});
