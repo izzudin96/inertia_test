@@ -1,4 +1,4 @@
-# For production build
+p# For production build
 FROM dunglas/frankenphp:1.5-php8.4-bookworm
 
 RUN apt-get update && apt-get install -y \
